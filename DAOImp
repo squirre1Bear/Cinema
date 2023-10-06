@@ -1,0 +1,97 @@
+package DAO;
+
+import java.util.*;
+
+public class DAOImp implements DAO{
+    protected ArrayList<User> information=new ArrayList();
+    public int length=0;       //注册用户的数量
+    public DAOImp(){
+        User user1=new User();      //初始设置一个管理员
+        user1.ID= "admin";
+        user1.password="ynuinfo#777";
+        user1.identity="admin";
+        user1.userName="曹涵涵";
+        user1.registration_time="2023年9月29日";
+        user1.phoneNumber="13313012673";
+        user1.address="916042768@qq.com";
+        information.add(user1);
+        this.length++;
+
+        User user2=new User();      //初始设置一个经理
+        user2.ID= "manager1";
+        user2.password="ynu888";
+        user2.identity="manager";
+        user2.userName="焦阳";
+        user2.registration_time="2023年10月4日";
+        user2.phoneNumber="13786498756";
+        user2.address="485963265@qq.com";
+        information.add(user2);
+        this.length++;
+
+        User user3=new User();    //TODO：把账号密码改复杂一点
+        user3.ID="111";
+        user3.password="111";
+        user3.identity="seller";
+        user3.userName="倪俊宇";
+        user3.registration_time="2023年10月5日";
+        user3.phoneNumber="13569874856";
+        user3.address="9655523541@qq.com";
+        information.add(user3);
+        this.length++;
+
+        User user4=new User();    //TODO：把账号密码改复杂一点
+        user4.ID="88";
+        user4.password="88";
+        user4.identity="customer";
+        user4.userName="子涵";
+        user4.registration_time="2023年10月6日";
+        user4.phoneNumber="15698569754";
+        user4.address="9655523541@qq.com";
+        user4.consumption=165;
+        information.add(user4);
+        this.length++;
+    }
+
+    public void addMember(User user){    //新增用户
+        information.add(user);
+        this.length++;
+    }
+
+    public void deleteMember(int i){     //删除用户数据
+        information.remove(i);
+        this.length--;
+    }
+
+    public void updatePassword(String password,int i){     //修改用户密码
+        User user= information.get(i);      //取下标为i的用户信息
+        user.password=password;     //修改密码
+        information.set(i,user);       //将修改后的内容放回数据表
+    }
+
+    public void updateIdentity(String iden, int i) {        //修改身份
+        User user=information.get(i);
+        user.identity=iden;
+        this.information.set(i,user);
+    }
+
+    public void updatePhoneNumber(String phone, int i) {       //修改手机号
+        User user=information.get(i);
+        user.phoneNumber=phone;
+        this.information.set(i,user);
+    }
+
+    public void updateAddress(String address, int i) {      //修改邮箱
+        User user=information.get(i);
+        user.address=address;
+        this.information.set(i,user);
+    }
+
+    public User getUser(int i){      //获得下标为i用户的信息
+        User user=information.get(i);
+        return user;
+    }
+
+    public int getLength(){
+        return this.length;
+    }
+}
