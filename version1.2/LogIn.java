@@ -1,0 +1,61 @@
+import DAO.*;
+import Identity.*;
+
+import java.util.Map;
+import java.util.Scanner;
+
+public class LogIn extends AbstractFunction<Map> {
+    Scanner sc=null;
+    public LogIn(Scanner sc){   //利用构造函数初始化scanner:
+        this.sc=sc;
+    }
+
+    public String getName() {
+        return "<登录>";
+    }
+
+    public void run() {
+        int loginFail=0;     //登录失败的次数，连续五次输入密码错误则退出
+        String ID;
+        String password;
+        //接收账号和密码
+        System.out.print(getName());
+        System.out.print("账号：");
+        sc.nextLine();
+        ID = this.sc.nextLine();
+        System.out.print(getName());
+        System.out.print("密码：");
+        password = this.sc.nextLine();
+        for (int i = 0; i < UserService.daoimp.getLength(); i++) {
+            System.out.println(i+"."+UserService.daoimp.getUser(i).ID+"  "+UserService.daoimp.getUser(i).password);
+            boolean acc=UserService.daoimp.getUser(i).ID.equals(ID);
+            boolean pas=UserService.daoimp.getUser(i).password.equals(password);
+            if (acc && pas) {
+                System.out.println("登录成功！");
+                //判断用户身份
+                switch(UserService.daoimp.getUser(i).identity){
+                    case "admin":
+                        Administrator admin=new Administrator(UserService.daoimp.getUser(i));
+                        admin.Admin_Menu(i);
+                        break;
+                    case "manager":
+                        Manager manager=new Manager(UserService.daoimp.getUser(i));
+                        manager.Manager_Menu();
+                        break;
+                    case "seller":
+                        Seller seller=new Seller(UserService.daoimp.getUser(i));
+                        seller.Seller_Menu();
+                        break;
+                    case "customer":
+                        Customer custo=new Customer(UserService.daoimp.getUser(i));
+                        custo.Customer_Menu();
+                        break;
+                    default:
+                        System.out.println("身份读取错误！");
+                }
+                return ;
+            }
+        }
+        System.out.println("账号或密码错误！");
+    }
+}
